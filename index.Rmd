@@ -1,0 +1,155 @@
+---
+title       : Presentaciones dinámicas HTML
+subtitle    : DECON-INEC
+author      : Andrés Peña M.
+job         : APDSc®
+framework   : io2012      # {io2012, html5slides, shower, dzslides, revealjs, deckjs, Landslide...}
+#revealjs   :       {theme: moon, transition: concav}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [bootstrap]            # {mathjax, quiz, bootstrap}
+ext_widgets : {rCharts: [libraries/nvd3, libraries/dygraphs]}
+mode        : selfcontained # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+logo        : logo.png
+---
+
+<style>
+.title-slide {
+  background-color: #B0E2FF; /* #EDE0CF; ; #CA9F9D*/
+  background-image:url(assets/img/cover1st_1.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position:relative; 
+}
+
+.title-slide hgroup {
+  position: absolute;
+  width: auto;
+  height: auto;
+  right: 80px;
+  top: 80px;
+  text-align: center;
+}
+
+.title-slide hgroup > h1 , 
+.title-slide hgroup > h2 ,
+.title-slide hgroup > p {
+  margin: 15;
+  color: white;
+  text-align: right;
+}
+
+</style>
+
+# .
+
+
+
+### ¿Qué es el Índice de Precios al Consumidor Estratificado?
+
+El Índice de Precios al Consumidor Estratificado, es una medida de variación del nivel general de precios de un conjunto representativo de bienes y servicios de consumo, adquiridos por los hogares clasificados en distintos segmentos socioeconómicos de la población. 
+
+### Propósito:
+
+Contribuye a una mejor representatividad socioeconómica frente a la heterogeneidad de precios a los que se enfrentan los hogares de distintas realidades. 
+
+### Período base:
+
+Diciembre 2015=100
+
+
+---
+
+## Matriz 
+
+```{r pressure, echo=TRUE, eval=TRUE}
+(mtx <- matrix (1:12, nrow=3, ncol=4, byrow=FALSE))
+
+```
+
+Toute la présentation a été réalisée avec le package R <code>slidify</code>
+</div>
+
+--- {class: class1, bg: gray, id: id1}
+
+## Gráfico 1
+
+```{r results = 'asis', commment = NA, message = F, echo = F, rcharts.mode = 'iframesrc', rcharts.cdn =TRUE}
+library(rCharts)
+hair_eye = as.data.frame(HairEyeColor)
+p2 <- nPlot(Freq ~ Hair, group = 'Eye', data = subset(hair_eye, Sex == "Female"), type = 'multiBarChart')
+p2$chart(color = c('brown', 'blue', '#594c26', 'green'))
+p2$print('chart1')
+```
+
+---
+
+## Gráfico 2
+
+```{r results = 'asis', commment = NA, message = F, echo = F, rcharts.mode = 'iframesrc', rcharts.cdn =TRUE}
+library(rCharts)
+library(ggplot2)
+ecm <- reshape2::melt(economics[,c('date', 'uempmed', 'psavert')], id = 'date')
+p9 <- nPlot(value ~ date, group = 'variable', data = ecm, type = 'lineChart')
+p9$xAxis( tickFormat="#!function(d) {return d3.time.format('%b %Y')(new Date( d * 86400000 ));}!#" )
+#try new interactive guidelines feature
+p9$chart(useInteractiveGuideline=TRUE)
+p9$print('chart2')
+```
+
+
+---
+
+## Gráfico 3
+
+```{r results = 'asis', commment = NA, message = F, echo = F, rcharts.mode = 'iframesrc', rcharts.cdn =TRUE}
+library(rCharts)
+dat <- data.frame(t=rep(0:23,each=4),var=rep(LETTERS[1:4],4),val=round(runif(4*24,0,50)))
+p8 <- nPlot(val ~ t, group =  'var', data = dat, type = 'stackedAreaChart', id = 'chart')
+p10 <- p8
+p10$chart(useInteractiveGuideline=TRUE)
+p10$print('chart3')
+```
+
+---
+
+## Gráfico 4
+
+```{r results = 'asis', commment = NA, message = F, echo = F, rcharts.mode = 'iframesrc', rcharts.cdn =TRUE}
+library(rCharts)
+library(ggplot2)
+ecm <- reshape2::melt(economics[,c('date', 'uempmed', 'psavert')], id = 'date')
+p7 <- nPlot(value ~ date, group = 'variable', data = ecm, type = 'lineWithFocusChart')
+p7$xAxis( tickFormat="#!function(d) {return d3.time.format('%b %Y')(new Date( d * 86400000 ));}!#" )
+p7$x2Axis( tickFormat="#!function(d) {return d3.time.format('%Y')(new Date( d * 86400000 ));}!#" )
+p7$xAxis( NULL, replace = T)
+p7$print('chart4')
+```
+
+---
+
+## Gráfico 5
+
+```{r results = 'asis', commment = NA, message = F, echo = F, rcharts.mode = 'iframesrc', rcharts.cdn =TRUE}
+library(rCharts)
+p11 <- nPlot(mpg ~ wt, group = 'cyl', data = mtcars, type = 'scatterChart')
+p11$chart(showDistX = TRUE, showDistY = TRUE)
+p11$print('chart5')
+```
+
+--- #result
+
+<iframe src="https://apdatasc.shinyapps.io/apli/" style="border: none; width: 1000px; height: 750px"></iframe>
+
+--- &slide_1 #custbg  
+
+<style>
+#custbg {
+  background-image:url(assets/img/cover3rd.png); 
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+</style>
